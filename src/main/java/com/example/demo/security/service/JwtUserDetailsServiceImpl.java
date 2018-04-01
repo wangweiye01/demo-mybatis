@@ -1,6 +1,6 @@
 package com.example.demo.security.service;
 
-import com.example.demo.model.security.User;
+import com.example.demo.security.model.User;
 import com.example.demo.security.JwtUserFactory;
 import com.example.demo.security.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

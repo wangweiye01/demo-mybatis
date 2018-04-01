@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.model.security.Authority;
+import com.example.demo.security.model.Authority;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +13,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import com.example.demo.model.security.AuthorityName;
-import com.example.demo.model.security.User;
+import com.example.demo.security.model.AuthorityName;
+import com.example.demo.security.model.User;
 import com.example.demo.security.JwtTokenUtil;
 import com.example.demo.security.JwtUser;
 import com.example.demo.security.JwtUserFactory;

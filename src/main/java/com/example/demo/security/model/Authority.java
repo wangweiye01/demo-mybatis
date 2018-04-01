@@ -1,4 +1,4 @@
-package com.example.demo.model.security;
+package com.example.demo.security.model;
 
 
 import javax.persistence.*;
