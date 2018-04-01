@@ -7,6 +7,6 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class Hello extends BaseEntity {
-    Integer age;
-    String name;
+    Integer id;
+    String email;
 }
