@@ -106,6 +106,6 @@ public class AuthenticationRestController {
 
         userRepository.save(user);
 
-        return JsonResult.success("注册成功");
+        return JsonResult.success("注册成功", null);
     }
 }
