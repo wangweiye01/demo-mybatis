@@ -1,7 +1,7 @@
 package com.example.demo.security.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.common.utils.JsonResult;
+import com.example.demo.common.JsonResult;
 import com.example.demo.security.model.Authority;
 import com.example.demo.security.model.User;
 import com.example.demo.security.JwtAuthenticationRequest;

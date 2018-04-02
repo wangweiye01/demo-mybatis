@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.common.utils.TimeProvider;
+import com.example.demo.common.TimeProvider;
 import com.example.demo.security.model.Authority;
 import com.example.demo.security.model.AuthorityName;
 import com.example.demo.security.model.User;

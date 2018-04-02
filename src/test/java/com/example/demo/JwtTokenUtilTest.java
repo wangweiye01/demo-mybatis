@@ -1,6 +1,6 @@
 package com.example.demo;
 
-import com.example.demo.common.utils.TimeProvider;
+import com.example.demo.common.TimeProvider;
 import com.example.demo.security.JwtTokenUtil;
 import com.example.demo.security.JwtUser;
 import io.jsonwebtoken.ExpiredJwtException;

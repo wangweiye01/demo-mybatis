@@ -2,7 +2,7 @@ package com.example.demo.hello.web;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.common.utils.JsonResult;
+import com.example.demo.common.JsonResult;
 import com.example.demo.hello.entity.Hello;
 import com.example.demo.hello.service.HelloService;
 import com.github.pagehelper.PageInfo;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 public class HelloController {
