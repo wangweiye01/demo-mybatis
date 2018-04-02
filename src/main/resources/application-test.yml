@@ -44,7 +44,7 @@ spring:
     timeout: 0
 logging:
   config:
-    classpath: com/demo/log/logback-spring.xml
+    classpath: example/log/logback-spring.xml
 jwt:
   header: Authorization
   secret: mySecret
