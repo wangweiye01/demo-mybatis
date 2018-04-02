@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS `user_authority`;
+CREATE TABLE `user_authority` (
+  `user_id` bigint(20) NOT NULL,
+  `authority_id` bigint(20) NOT NULL,
+  `created_at` TIMESTAMP DEFAULT current_timestamp,
+  `updated_at` TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp NULL
+) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户权限关联表';
+
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -10,6 +18,7 @@ CREATE TABLE `user` (
   `username` varchar(50) NOT NULL,
   `created_at` TIMESTAMP DEFAULT current_timestamp,
   `updated_at` TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp NULL,
+  `is_delete` TINYINT NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表';
 
@@ -21,14 +30,6 @@ CREATE TABLE `authority` (
   `updated_at` TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='权限表';
-
-DROP TABLE IF EXISTS `user_authority`;
-CREATE TABLE `user_authority` (
-  `user_id` bigint(20) NOT NULL,
-  `authority_id` bigint(20) NOT NULL,
-  `created_at` TIMESTAMP DEFAULT current_timestamp,
-  `updated_at` TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp NULL
-) ENGINE=InnoDB AUTO_INCREMENT=100001 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户权限关联表';
 
 INSERT INTO `authority`(id,name) VALUES (1,'ROLE_USER'),(2,'ROLE_ADMIN');
 

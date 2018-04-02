@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.hello.repository.HelloDao">
+    <resultMap id="helloMap" type="com.example.demo.hello.entity.Hello">
+        <id property="id" column="id"/>
+        <id column="email" property="email"/>
+        <id column="created_at" property="createdAt"/>
+        <id column="updated_at" property="updatedAt"/>
+        <id column="is_delete" property="isDelete"/>
+    </resultMap>
+
     <sql id="helloColumn">
         id,
-        email
+        email,
+        created_at,
+        updated_at,
+        is_delete
     </sql>
 
-    <select id="findList" resultType="com.example.demo.hello.entity.Hello">
+    <select id="findList" resultMap="helloMap">
         SELECT
         <include refid="helloColumn"/>
         FROM user
