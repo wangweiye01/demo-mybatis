@@ -25,6 +25,8 @@ spring:
     properties:
       hibernate:
         dialect: com.example.demo.config.MySQL5DialectUTF8
+    hibernate:
+      ddl-auto: update
   jackson:
     serialization:
       indent_output: true
