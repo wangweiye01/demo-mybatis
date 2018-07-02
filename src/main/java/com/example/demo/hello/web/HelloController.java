@@ -4,6 +4,7 @@ package com.example.demo.hello.web;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.common.JsonResult;
 import com.example.demo.hello.entity.Hello;
+import com.example.demo.hello.repository.VideoMapper;
 import com.example.demo.hello.service.HelloService;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiImplicitParam;
@@ -20,6 +21,9 @@ public class HelloController {
     @Autowired
     private HelloService helloService;
 
+    @Autowired
+    private VideoMapper videoMapper;
+
     @ApiOperation(value = "测试swagger2", notes = "接口具体描述")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "Authorization", value = "token", required = true, dataType = "string"),
@@ -31,5 +35,15 @@ public class HelloController {
     public JSONObject index(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
         PageInfo<Hello> pageInfo = helloService.test(page, size);
         return JsonResult.success(pageInfo.getList(), pageInfo);
+    }
+
+    @ApiOperation(value = "测试swagger2", notes = "接口具体描述")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", name = "Authorization", value = "token", required = true, dataType = "string"),
+    })
+
+    @RequestMapping(value = "/hello2", method = RequestMethod.GET)
+    public JSONObject index2(@RequestParam(required = false) Integer page, @RequestParam(required = false) Integer size) {
+        videoMapper
     }
 }
