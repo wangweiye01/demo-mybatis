@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.pagehelper.PageInfo;
+import com.baomidou.mybatisplus.plugins.Page;
 
 public class JsonResult {
     // 成功状态
@@ -15,19 +15,18 @@ public class JsonResult {
     // 错误
     public static final Integer ERROR_CODE = 500;
 
-    public static final <T> JSONObject success(Object data, PageInfo<T> pageInfo) {
+    public static final <T> JSONObject success(Object data, Page page) {
         JSONObject jsonObject = new JSONObject();
 
         jsonObject.put("data", data);
         jsonObject.put("code", SUCCESS_CODE);
 
-        Map<String, Object> page = new HashMap<>();
-        page.put("pageNum", pageInfo.getPageNum());
-        page.put("pageSize", pageInfo.getPageSize());
-        page.put("total", pageInfo.getTotal());
-        page.put("isFirstPage", pageInfo.isIsFirstPage());
-        page.put("isLastPage", pageInfo.isIsLastPage());
-        jsonObject.put("page", page);
+        Map<String, Object> pageInfo = new HashMap<>();
+        pageInfo.put("current", page.getCurrent());
+        pageInfo.put("total", page.getTotal());
+        pageInfo.put("pages", page.getPages());
+
+        jsonObject.put("page", pageInfo);
 
         return jsonObject;
     }

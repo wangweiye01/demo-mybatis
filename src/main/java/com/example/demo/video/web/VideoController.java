@@ -26,17 +26,21 @@ public class VideoController {
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "Authorization", value = "token", required = true, dataType = "string"),
             @ApiImplicitParam(name = "id", value = "视频Id", dataType = "int", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "第几页", dataType = "int", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "每页几条", dataType = "int", required = false, paramType = "query"),
     })
 
     @RequestMapping(method = RequestMethod.GET)
-    public JSONObject index(@RequestParam(required = false) Integer id) {
+    public JSONObject index(@RequestParam(required = false) Integer id, @RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "5") Integer size) {
         // List<Video> videos = videoMapper.selectList(new EntityWrapper().eq("title", "标题"));
         Video param = new Video();
         param.setId(id);
 
-        List<Video> videos = videoMapper.selectPage(new Page<Video>(1, 2), new EntityWrapper<Video>(param));
+        Page<Video> pagehelp = new Page<Video>(page, size);
 
-        return JsonResult.success(videos);
+        List<Video> videos = videoMapper.selectPage(pagehelp, new EntityWrapper<Video>(param));
+
+        return JsonResult.success(videos, pagehelp);
     }
 
     @ApiOperation(value = "获得一个视频", notes = "")
