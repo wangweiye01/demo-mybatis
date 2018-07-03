@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.demo.hello.repository.HelloMapper">
-    <resultMap id="helloMap" type="com.example.demo.hello.entity.Hello">
+<mapper namespace="com.example.demo.video.repository.HelloMapper">
+    <resultMap id="helloMap" type="com.example.demo.video.entity.Hello">
         <id property="id" column="id"/>
         <id column="email" property="email"/>
         <id column="created_at" property="createdAt"/>
