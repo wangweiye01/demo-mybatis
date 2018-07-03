@@ -8,7 +8,7 @@ import lombok.Data;
 @TableName("video")
 public class Video {
     @TableId
-    private String id;
+    private Integer id;
 
     private String title;
 

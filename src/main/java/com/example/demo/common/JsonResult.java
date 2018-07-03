@@ -21,15 +21,22 @@ public class JsonResult {
         jsonObject.put("data", data);
         jsonObject.put("code", SUCCESS_CODE);
 
-        if (pageInfo != null) {
-            Map<String, Object> page = new HashMap<>();
-            page.put("pageNum", pageInfo.getPageNum());
-            page.put("pageSize", pageInfo.getPageSize());
-            page.put("total", pageInfo.getTotal());
-            page.put("isFirstPage", pageInfo.isIsFirstPage());
-            page.put("isLastPage", pageInfo.isIsLastPage());
-            jsonObject.put("page", page);
-        }
+        Map<String, Object> page = new HashMap<>();
+        page.put("pageNum", pageInfo.getPageNum());
+        page.put("pageSize", pageInfo.getPageSize());
+        page.put("total", pageInfo.getTotal());
+        page.put("isFirstPage", pageInfo.isIsFirstPage());
+        page.put("isLastPage", pageInfo.isIsLastPage());
+        jsonObject.put("page", page);
+
+        return jsonObject;
+    }
+
+    public static final <T> JSONObject success(Object data) {
+        JSONObject jsonObject = new JSONObject();
+
+        jsonObject.put("data", data);
+        jsonObject.put("code", SUCCESS_CODE);
 
         return jsonObject;
     }

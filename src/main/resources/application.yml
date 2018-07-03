@@ -52,6 +52,10 @@ spring:
 logging:
   config:
     classpath: example/log/logback-spring.xml
+  level:
+    com:
+      example:
+        demo: debug
 jwt:
   header: Authorization
   secret: mySecret
