@@ -52,12 +52,9 @@ public class VideoController {
 
     @RequestMapping(value = "/myPage", method = RequestMethod.GET)
     public JSONObject page(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "5") Integer size) {
-        Page<Video> pageinfo = new Page<>();
-        pageinfo.setCurrent(page);
-        pageinfo.setSize(size);
-        pageinfo.setRecords(videoMapper.findPage(pageinfo));
+        Page<Video> pageinfo = new Page<>(page, size);
 
-        return JsonResult.success(pageinfo);
+        return JsonResult.success(videoMapper.findPage(pageinfo), pageinfo);
     }
 
     @ApiOperation(value = "获得一个视频", notes = "")
