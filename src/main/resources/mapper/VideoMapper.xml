@@ -8,8 +8,13 @@
     </resultMap>
 
     <select id="findOne" resultMap="videoMap">
-        SELECT title,url,id
+        SELECT title,url,id,type
         FROM video
         WHERE id = #{id}
+    </select>
+
+    <select id="findPage" resultMap="videoMap">
+        SELECT title,url,id,type
+        FROM video
     </select>
 </mapper>

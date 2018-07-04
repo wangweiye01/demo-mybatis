@@ -43,6 +43,23 @@ public class VideoController {
         return JsonResult.success(videos, pagehelp);
     }
 
+    @ApiOperation(value = "自定义sql分页", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(paramType = "header", name = "Authorization", value = "token", required = true, dataType = "string"),
+            @ApiImplicitParam(name = "page", value = "第几页", dataType = "int", required = false, paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "每页几条", dataType = "int", required = false, paramType = "query"),
+    })
+
+    @RequestMapping(value = "/myPage", method = RequestMethod.GET)
+    public JSONObject page(@RequestParam(required = false, defaultValue = "1") Integer page, @RequestParam(required = false, defaultValue = "5") Integer size) {
+        Page<Video> pageinfo = new Page<>();
+        pageinfo.setCurrent(page);
+        pageinfo.setSize(size);
+        pageinfo.setRecords(videoMapper.findPage(pageinfo));
+
+        return JsonResult.success(pageinfo);
+    }
+
     @ApiOperation(value = "获得一个视频", notes = "")
     @ApiImplicitParams({
             @ApiImplicitParam(paramType = "header", name = "Authorization", value = "token", required = true, dataType = "string"),
