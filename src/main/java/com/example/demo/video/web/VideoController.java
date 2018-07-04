@@ -36,11 +36,11 @@ public class VideoController {
         Video param = new Video();
         param.setType(type);
 
-        Page<Video> pagehelp = new Page<Video>(page, size);
+        Page<Video> pageinfo = new Page<Video>(page, size);
 
-        List<Video> videos = videoMapper.selectPage(pagehelp, new EntityWrapper<Video>(param));
+        List<Video> videos = videoMapper.selectPage(pageinfo, new EntityWrapper<Video>(param));
 
-        return JsonResult.success(videos, pagehelp);
+        return JsonResult.success(videos, pageinfo);
     }
 
     @ApiOperation(value = "自定义sql分页", notes = "")
