@@ -13,4 +13,6 @@ public class Video {
     private String title;
 
     private String url;
+
+    private Integer type;
 }
