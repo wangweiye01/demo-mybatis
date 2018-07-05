@@ -26,6 +26,8 @@ public class JsonResult {
         pageInfo.put("total", page.getTotal());
         pageInfo.put("pages", page.getPages());
         pageInfo.put("size", page.getSize());
+        pageInfo.put("hasNext", page.hasNext());
+        pageInfo.put("hasPrevious", page.hasPrevious());
 
         jsonObject.put("page", pageInfo);
 
