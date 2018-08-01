@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.log.repository.ErrorLogMapper">
+    <resultMap id="errorLogMap" type="com.example.demo.log.entity.ErrorLog">
+        <id property="id" column="id"/>
+        <id column="info" property="info"/>
+    </resultMap>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.example.demo.log.entity.ErrorLog">
+        insert into error_log
+        (info)
+        values
+        (#{info})
+    </insert>
+</mapper>

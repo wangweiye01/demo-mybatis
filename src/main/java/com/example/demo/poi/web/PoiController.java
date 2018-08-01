@@ -3,6 +3,8 @@ package com.example.demo.poi.web;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.common.JsonResult;
+import com.example.demo.log.entity.ErrorLog;
+import com.example.demo.log.repository.ErrorLogMapper;
 import com.example.demo.poi.entity.Poi;
 import com.example.demo.poi.repository.PoiMapper;
 import io.swagger.annotations.ApiOperation;
@@ -22,10 +24,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/poi")
 public class PoiController {
-    private static final Logger logger  =  LoggerFactory.getLogger(PoiController. class );
+    private static final Logger logger = LoggerFactory.getLogger(PoiController.class);
 
     @Autowired
     private PoiMapper poiMapper;
+
+    @Autowired
+    private ErrorLogMapper errorLogMapper;
 
     @ApiOperation(value = "将所有的原始数据excel导入到数据库", notes = "")
 
@@ -87,7 +92,9 @@ public class PoiController {
                 try {
                     poiMapper.insertNewPoi(poi);
                 } catch (Exception e) {
-                    logger.error("文件:" + x.getName() + "中" + poi.getRegisterCode() + "重复");
+                    ErrorLog errorLog = new ErrorLog();
+                    errorLog.setInfo("文件:" + x.getName() + "中" + poi.getRegisterCode() + "重复");
+                    errorLogMapper.insert(errorLog);
                     e.printStackTrace();
                 }
             });
