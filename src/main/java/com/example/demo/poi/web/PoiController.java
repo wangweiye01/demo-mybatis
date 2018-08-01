@@ -7,6 +7,8 @@ import com.example.demo.poi.entity.Poi;
 import com.example.demo.poi.repository.PoiMapper;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.java.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import cn.hutool.poi.excel.ExcelReader;
@@ -19,11 +21,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/poi")
-@Log
 public class PoiController {
+    private static final Logger logger  =  LoggerFactory.getLogger(PoiController. class );
+
     @Autowired
     private PoiMapper poiMapper;
-
 
     @ApiOperation(value = "将所有的原始数据excel导入到数据库", notes = "")
 
@@ -82,12 +84,10 @@ public class PoiController {
                 Poi poi = new Poi();
                 poi.setRegisterCode(map.get("注册代码（不超过20位）").toString());
 
-                System.out.println(poi.toString());
-
                 try {
                     poiMapper.insertNewPoi(poi);
                 } catch (Exception e) {
-                    log.info("文件:" + x.getName() + "中" + poi.getRegisterCode() + "重复");
+                    logger.error("文件:" + x.getName() + "中" + poi.getRegisterCode() + "重复");
                     e.printStackTrace();
                 }
             });

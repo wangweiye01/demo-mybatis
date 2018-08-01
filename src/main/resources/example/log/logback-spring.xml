@@ -19,9 +19,9 @@
            stdout将日志信息输出到控制上，为方便开发测试使用
     -->
     <contextName>demo</contextName>
-    <property name="LOG_PATH" value="../poilogs"/>
+    <property name="LOG_PATH" value="/Users/wangweiye/logs"/>
     <!--设置系统日志目录-->
-    <property name="APPDIR" value="demo"/>
+    <property name="APPDIR" value="poi"/>
 
     <!-- 日志记录器，日期滚动记录 -->
     <appender name="FILEERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -135,7 +135,7 @@
     <logger name="java.sql.PreparedStatement" level="DEBUG"/>
     <logger name="com.example.demo" level="debug"/>
     <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="FILEERROR"/>
         <appender-ref ref="FILEWARN"/>
         <appender-ref ref="FILEINFO"/>
