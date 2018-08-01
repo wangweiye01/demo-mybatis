@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.video.repository.VideoMapper">
+    <resultMap id="poiMap" type="com.example.demo.poi.entity.OriginPoi">
+        <id property="id" column="id"/>
+        <id column="register_code" property="registerCode"/>
+    </resultMap>
+
+    <select id="findByRegisterCode" resultMap="poiMap">
+        SELECT id,register_code
+        FROM origin_poi
+        WHERE register_code = #{registerCode}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.example.demo.poi.entity.OriginPoi">
+        insert into origin_poi
+        (register_code)
+        values
+        (#{registerCode})
+    </insert>
+</mapper>
