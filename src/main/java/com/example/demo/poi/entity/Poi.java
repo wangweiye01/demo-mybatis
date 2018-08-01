@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 
 @Data
-public class OriginPoi {
+public class Poi {
     private Integer id;
     private String registerCode;
 }
