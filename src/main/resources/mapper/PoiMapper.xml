@@ -6,6 +6,11 @@
         <id column="register_code" property="registerCode"/>
     </resultMap>
 
+    <select id="findAllOrigin" resultMap="poiMap">
+        SELECT id,register_code
+        FROM origin_poi
+    </select>
+
     <select id="findByRegisterCode" resultMap="poiMap">
         SELECT id,register_code
         FROM origin_poi
@@ -23,8 +28,8 @@
     <insert id="insertNewPoi" useGeneratedKeys="true" keyProperty="id"
             parameterType="com.example.demo.poi.entity.Poi">
         insert into new_poi
-        (register_code)
+        (register_code,file)
         values
-        (#{registerCode})
+        (#{registerCode},#{file})
     </insert>
 </mapper>

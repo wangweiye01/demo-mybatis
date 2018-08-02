@@ -75,3 +75,6 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+poi:
+  origin-data-path: /Users/wangweiye/Desktop/电梯资料_20180801.xls
+  new-data-folder: /Users/wangweiye/Desktop/newDataFolder
