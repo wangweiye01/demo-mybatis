@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.common.TimeProvider;
+import com.example.demo.poi.web.PoiController;
 import com.example.demo.security.model.Authority;
 import com.example.demo.security.model.AuthorityName;
 import com.example.demo.security.model.User;
@@ -28,6 +29,8 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
@@ -146,5 +149,10 @@ public class DemoApplicationTests {
         this.mvc.perform(get("/refresh"))
                 .andExpect(status().isUnauthorized());
 
+    }
+
+    @Test
+    public void testNum() {
+        System.out.println(PoiController.isNumeric("31101309832013120038"));
     }
 }

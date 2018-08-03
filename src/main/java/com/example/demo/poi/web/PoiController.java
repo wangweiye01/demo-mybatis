@@ -24,6 +24,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/poi")
@@ -108,17 +110,19 @@ public class PoiController {
                 if (StrUtil.isEmpty(poi.getRegisterCode())) {
                     // 注册代码为空
                     errorLog.setInfo("文件:" + x.getName() + "中维保负责人手机为:" + poi.getServiceMobile() + "的注册代码为空");
+                    errorLogMapper.insert(errorLog);
                 }
 
-                if (!ReUtil.isMatch("^[0-9]*$", poi.getRegisterCode())) ;
-                {
+                /*if (!PoiController.isNumeric(poi.getRegisterCode().trim())) {
                     // 注册代码中不全是数字
                     errorLog.setInfo("文件:" + x.getName() + "中注册代码为:" + poi.getRegisterCode() + "的注册代码不全部是数字");
-                }
+                    errorLogMapper.insert(errorLog);
+                }*/
 
                 if (StrUtil.isEmpty(poi.getInstallAddress())) {
                     // 安装地址为空
                     errorLog.setInfo("文件:" + x.getName() + "中注册代码为:" + poi.getRegisterCode() + "的数据安装地址为空");
+                    errorLogMapper.insert(errorLog);
                 }
 
                 if (StrUtil.isEmpty(poi.getServiceUnit())) {
@@ -128,10 +132,12 @@ public class PoiController {
                 if (StrUtil.isEmpty(poi.getPrincipal())) {
                     // 维保负责人为空
                     errorLog.setInfo("文件:" + x.getName() + "中注册代码为:" + poi.getRegisterCode() + "的维保负责人为空");
+                    errorLogMapper.insert(errorLog);
                 }
                 if (StrUtil.isEmpty(poi.getServiceMobile())) {
                     // 维保负责人手机为空
                     errorLog.setInfo("文件:" + x.getName() + "中注册代码为:" + poi.getRegisterCode() + "的维保负责人手机为空");
+                    errorLogMapper.insert(errorLog);
                 }
 
                 try {
@@ -172,5 +178,10 @@ public class PoiController {
         });
 
         return JsonResult.success("对比结束");
+    }
+
+    public static boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        return pattern.matcher(str).matches();
     }
 }
