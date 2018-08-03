@@ -4,6 +4,7 @@
     <resultMap id="poiMap" type="com.example.demo.poi.entity.Poi">
         <id property="id" column="id"/>
         <id column="register_code" property="registerCode"/>
+        <id column="file" property="file"/>
     </resultMap>
 
     <select id="findAllOrigin" resultMap="poiMap">
@@ -14,6 +15,12 @@
     <select id="findByRegisterCode" resultMap="poiMap">
         SELECT id,register_code
         FROM origin_poi
+        WHERE register_code = #{registerCode}
+    </select>
+
+    <select id="findByRegisterCodeFromNew" resultMap="poiMap">
+        SELECT id,register_code,file
+        FROM new_poi
         WHERE register_code = #{registerCode}
     </select>
 

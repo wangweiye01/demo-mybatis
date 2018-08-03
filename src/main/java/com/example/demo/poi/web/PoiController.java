@@ -100,11 +100,11 @@ public class PoiController {
                 Poi poi = new Poi();
                 ErrorLog errorLog = new ErrorLog();
 
-                poi.setRegisterCode(map.get("注册代码（不超过20位）").toString());
-                poi.setInstallAddress(map.get("电梯安装地址").toString());
-                poi.setServiceUnit(map.get("电梯维保单位").toString());
-                poi.setPrincipal(map.get("维保负责人").toString());
-                poi.setServiceMobile(map.get("维保负责人手机").toString());
+                poi.setRegisterCode(map.get("注册代码（不超过20位）") == null ? null : map.get("注册代码（不超过20位）").toString());
+                poi.setInstallAddress(map.get("电梯安装地址") == null ? null : map.get("电梯安装地址").toString());
+                poi.setServiceUnit(map.get("电梯维保单位") == null ? null : map.get("电梯维保单位").toString());
+                poi.setPrincipal(map.get("维保负责人") == null ? null : map.get("维保负责人").toString());
+                poi.setServiceMobile(map.get("维保负责人手机") == null ? null : map.get("维保负责人手机").toString());
                 poi.setFile(x.getName());
 
                 if (StrUtil.isEmpty(poi.getRegisterCode())) {
@@ -143,8 +143,10 @@ public class PoiController {
                 try {
                     poiMapper.insertNewPoi(poi);
                 } catch (Exception e) {
-                    errorLog.setInfo("文件:" + x.getName() + "中" + poi.getRegisterCode() + "重复");
-                    errorLogMapper.insert(errorLog);
+                    if (StrUtil.isNotEmpty(poi.getRegisterCode())) {
+                        errorLog.setInfo("文件:" + x.getName() + "中" + poi.getRegisterCode() + "重复");
+                        errorLogMapper.insert(errorLog);
+                    }
                     e.printStackTrace();
                 }
             });
@@ -171,7 +173,10 @@ public class PoiController {
             try {
                 poiMapper.insertNewPoi(poi);
             } catch (Exception e) {
-                errorLog.setInfo("原有数据中注册代码为:" + x.getRegisterCode() + "的数据与新数据重复");
+                // 查询
+                Poi poi1 = poiMapper.findByRegisterCodeFromNew(x.getRegisterCode());
+
+                errorLog.setInfo("原有数据中注册代码为:" + x.getRegisterCode() + "的数据与文件:" + poi1.getFile() + "中数据重复");
                 errorLogMapper.insert(errorLog);
                 e.printStackTrace();
             }
