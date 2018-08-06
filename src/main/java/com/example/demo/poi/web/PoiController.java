@@ -144,7 +144,10 @@ public class PoiController {
                     poiMapper.insertNewPoi(poi);
                 } catch (Exception e) {
                     if (StrUtil.isNotEmpty(poi.getRegisterCode())) {
-                        errorLog.setInfo("文件:" + x.getName() + "中" + poi.getRegisterCode() + "重复");
+                        // 查找重复的库中数据文件
+                        Poi poi1 = poiMapper.findByRegisterCodeFromNew(poi.getRegisterCode());
+
+                        errorLog.setInfo("文件:" + x.getName() + "中注册代码为:" + poi.getRegisterCode() + "的数据与" + poi1.getFile() + "文件中数据重复");
                         errorLogMapper.insert(errorLog);
                     }
                     e.printStackTrace();
