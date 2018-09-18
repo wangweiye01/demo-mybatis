@@ -127,6 +127,12 @@
             <artifactId>pagehelper</artifactId>
             <version>4.1.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>1.9</version>
+        </dependency>
     </dependencies>
 
     <build>
