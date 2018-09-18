@@ -4,6 +4,8 @@ import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig;
 import org.junit.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 public class JasyptTest {
     @Test
     public void encrypt() {
@@ -31,6 +33,6 @@ public class JasyptTest {
 
         //解密
         String plaintext = encryptor.decrypt(ciphertext); // 解密
-        System.out.println(ciphertext + " : " + plaintext);// 运行结果：zLdyNB+Dj3iw+J+TXZiv5g== : root
+        assertThat(plaintext).isEqualTo("root");
     }
 }
