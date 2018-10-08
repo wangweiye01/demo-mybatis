@@ -1,30 +1,37 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/demo?useSSL=true&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
-    username: root
-    password: abc123
+    username: ENC(QyDus8bopdtmgrmt5yRUbA==)
+    password: ENC(D6KMCeYYagK/jI8TohYbLg==)
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    validationQuery: select 'x'
-    maxOpenPreparedStatements: 20
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxPoolPreparedStatementPerConnectionSize: 20
-    filters: stat,wall,log4j
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    druid:
+      initial-size: 5
+      min-idle: 5
+      max-active: 20
+      max-wait: 30000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      test-while-idle: true
+      test-on-borrow: true
+      test-on-return: false
+      validation-query: SELECT 'x'
+      remove-abandoned: true
+      remove-abandoned-timeout: 1800
+      filters: stat,wall
+      stat-view-servlet:
+        url-pattern: /druid/*
+        reset-enable: true
+        login-username: admin
+        login-password: admin
+        aop-patterns: com.example.demo.*.service.*
   jpa:
     show-sql: true
     properties:
       hibernate:
         dialect: com.example.demo.config.MySQL5DialectUTF8
+    hibernate:
+      ddl-auto: update
   jackson:
     serialization:
       indent_output: true
@@ -45,6 +52,10 @@ spring:
 logging:
   config:
     classpath: example/log/logback-spring-test.xml
+  level:
+    com:
+      example:
+        demo: debug
 jwt:
   header: Authorization
   secret: mySecret
@@ -56,3 +67,18 @@ jwt:
 page:
   begin: 1
   size: 10
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*Mapper.xml
+  type-aliases-package: com.example.demo.*.entity
+  global-config:
+    id-type: 0
+    field-strategy: 1
+    db-column-underline: true
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+jasypt:
+  encryptor:
+    password: Afei@2018
