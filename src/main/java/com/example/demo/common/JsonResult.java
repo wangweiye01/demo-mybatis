@@ -12,7 +12,7 @@ public class JsonResult {
     public static final Integer SUCCESS_CODE = 200;
     // 参数错误
     public static final Integer PARAMETER_ERROR = 501;
-    // 错误
+    // 其他错误
     public static final Integer ERROR_CODE = 500;
 
     public static final <T> JSONObject success(Object data, Page page) {
