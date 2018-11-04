@@ -1,9 +1,13 @@
 package com.example.demo.rest;
 
 
+import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,5 +40,15 @@ public class PersonRestService {
         return persons.stream()
                 .filter(person -> name.equalsIgnoreCase(person.getName()))
                 .findAny().orElse(null);
+    }
+
+    @ApiOperation(value = "301跳转", notes = "")
+    @RequestMapping(path = "/redirect", method = RequestMethod.GET)
+    public ResponseEntity<String> redirect() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        httpHeaders.set("Location", "http://www.baidu.com");
+
+        return new ResponseEntity<String>("Redirect", httpHeaders, HttpStatus.MOVED_PERMANENTLY);
     }
 }
