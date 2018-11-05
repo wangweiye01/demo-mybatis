@@ -43,13 +43,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting username from token", e);
             } catch (Exception e1) {
-            	logger.error(e1.getMessage());
+                logger.error(e1.getMessage());
             }
-        } else {
-            logger.info("couldn't find bearer string, will ignore the header");
         }
 
-        logger.info("checking authentication for user " + username);
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             // It is not compelling necessary to load the use details from the database. You could also store the information
