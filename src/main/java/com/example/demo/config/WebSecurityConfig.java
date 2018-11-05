@@ -1,5 +1,6 @@
 package com.example.demo.config;
 
+import com.example.demo.security.CustomPostProcessor;
 import com.example.demo.security.JwtAuthenticationEntryPoint;
 import com.example.demo.security.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
@@ -75,7 +75,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/druid/**").permitAll()
                 .antMatchers("/redirect").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated().withObjectPostProcessor(new CustomPostProcessor());
 
         // Custom JWT based security filter
         httpSecurity
