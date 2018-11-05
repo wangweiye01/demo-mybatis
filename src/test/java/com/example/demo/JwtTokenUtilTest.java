@@ -21,9 +21,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 import static org.mockito.Mockito.*;
 
-/**
- * Created by stephan on 10.09.16.
- */
 public class JwtTokenUtilTest {
 
     private static final String TEST_USERNAME = "testUser";

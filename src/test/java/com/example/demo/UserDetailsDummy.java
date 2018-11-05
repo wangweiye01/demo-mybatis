@@ -5,9 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
-/**
- * Created by stephan on 04.07.17.
- */
 public class UserDetailsDummy implements UserDetails {
 
     private final String username;
