@@ -23,7 +23,7 @@ public class CustomFilterSecurityMetadataSource implements FilterInvocationSecur
 
         if (isMatcherAllowedRequest(fi)) return null; //return null 表示允许访问，不做拦截
 
-        List<ConfigAttribute> configAttributes = getMatcherConfigAttribute(fi.getRequestUrl()); // 获得访问当前路径所需要的角色
+        List<ConfigAttribute> configAttributes = getMatcherConfigAttribute(fi.getRequestUrl(), fi.getRequest().getMethod()); // 获得访问当前路径所需要的角色
 
         return configAttributes.size() > 0 ? configAttributes : deniedRequest(); //返回当前路径所需角色，如果路径没有对应角色，则拒绝访问
     }
@@ -39,19 +39,19 @@ public class CustomFilterSecurityMetadataSource implements FilterInvocationSecur
     }
 
     /**
-     * 获取当前路径所需要的角色
+     * 获取当前路径以及请求方式获得所需要的角色
      *
      * @param url 当前路径
      * @return 所需角色集合
      */
-    private List<ConfigAttribute> getMatcherConfigAttribute(String url) {
+    private List<ConfigAttribute> getMatcherConfigAttribute(String url, String method) {
         /*return roleResourceRepository.findByResource_ResUrl(url).stream()
                 .map(roles -> new SecurityConfig(roles.getRole().getRoleCode()))
                 .collect(Collectors.toList());*/
 
         List<ConfigAttribute> configAttributes = new ArrayList<>();
 
-        // configAttributes.add(new SecurityConfig("ROLE_A"));
+        configAttributes.add(new SecurityConfig("ROLE_A"));
 
         return configAttributes;
     }
