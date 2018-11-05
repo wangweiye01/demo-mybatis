@@ -1,22 +1,32 @@
 package com.example.demo.security;
 
+import com.example.demo.security.model.Api;
+import com.example.demo.security.model.Authority;
+import com.example.demo.security.model.Resource;
+import com.example.demo.security.repository.ApiRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * 路径拦截处理类
- *
+ * <p>
  * 如果路径属于允许访问列表，则不做拦截，放开访问；
- *
+ * <p>
  * 否则，获得路径访问所需角色，并返回；如果没有找到该路径所需角色，则拒绝访问。
  */
-
+@Component
 public class CustomFilterSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+    @Autowired
+    private ApiRepository apiRepository;
+
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
         FilterInvocation fi = (FilterInvocation) object; //当前请求对象
@@ -49,11 +59,21 @@ public class CustomFilterSecurityMetadataSource implements FilterInvocationSecur
                 .map(roles -> new SecurityConfig(roles.getRole().getRoleCode()))
                 .collect(Collectors.toList());*/
 
-        List<ConfigAttribute> configAttributes = new ArrayList<>();
+        Set<Authority> authorities = new HashSet<>();
 
-        configAttributes.add(new SecurityConfig("ROLE_A"));
+        Api api = apiRepository.findByUriAndMethod(url, method);
 
-        return configAttributes;
+        if (api == null) {
+            return new ArrayList<>();
+        }
+
+        List<Resource> resources = api.getResources();
+
+        resources.forEach(x -> {
+            authorities.addAll(x.getAuthorities());
+        });
+
+        return authorities.stream().map(authority -> new SecurityConfig(authority.getName().toString())).collect(Collectors.toList());
     }
 
     /**
@@ -72,7 +92,7 @@ public class CustomFilterSecurityMetadataSource implements FilterInvocationSecur
      * @return 定义允许请求的列表
      */
     private List<String> allowedRequest() {
-        return Arrays.asList("/login", "/css/**", "/fonts/**", "/js/**", "/scss/**", "/img/**");
+        return Arrays.asList("/auth/**", "/css/**", "/fonts/**", "/js/**", "/scss/**", "/img/**", "/html/**", "/", "/favicon.ico");
     }
 
     /**
