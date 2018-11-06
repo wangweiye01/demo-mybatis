@@ -92,7 +92,7 @@ public class CustomFilterSecurityMetadataSource implements FilterInvocationSecur
      * @return 定义允许请求的列表
      */
     private List<String> allowedRequest() {
-        return Arrays.asList("/auth/**", "/css/**", "/fonts/**", "/js/**", "/scss/**", "/img/**", "/html/**", "/", "/favicon.ico");
+        return Arrays.asList("/auth/**", "/css/**", "/fonts/**", "/js/**", "/scss/**", "/img/**", "/html/**", "/", "/favicon.ico", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs");
     }
 
     /**
