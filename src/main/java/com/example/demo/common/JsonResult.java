@@ -1,9 +1,11 @@
 package com.example.demo.common;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.plugins.Page;
 
@@ -16,10 +18,10 @@ public class JsonResult {
     public static final Integer ERROR_CODE = 500;
 
     public static final <T> JSONObject success(Object data, Page page) {
-        JSONObject jsonObject = new JSONObject();
+        Map<String, Object> result = new HashMap<>();
 
-        jsonObject.put("data", data);
-        jsonObject.put("code", SUCCESS_CODE);
+        result.put("data", data == null ? new ArrayList<>() : data);
+        result.put("code", SUCCESS_CODE);
 
         Map<String, Object> pageInfo = new HashMap<>();
         pageInfo.put("current", page.getCurrent());
@@ -29,26 +31,27 @@ public class JsonResult {
         pageInfo.put("hasNext", page.hasNext());
         pageInfo.put("hasPrevious", page.hasPrevious());
 
-        jsonObject.put("page", pageInfo);
+        result.put("page", pageInfo);
 
-        return jsonObject;
+        return JSON.parseObject(JSON.toJSONString(result));
     }
 
     public static final <T> JSONObject success(Object data) {
-        JSONObject jsonObject = new JSONObject();
+        Map<String, Object> result = new HashMap<>();
 
-        jsonObject.put("data", data);
-        jsonObject.put("code", SUCCESS_CODE);
+        result.put("data", data == null ? new ArrayList<>() : data);
+        result.put("code", SUCCESS_CODE);
 
-        return jsonObject;
+        return JSON.parseObject(JSON.toJSONString(result));
     }
 
     public static final JSONObject fail(String message, Integer code) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("message", message);
-        jsonObject.put("code", code);
+        Map<String, Object> result = new HashMap<>();
 
-        return jsonObject;
+        result.put("message", message);
+        result.put("code", code);
+
+        return JSON.parseObject(JSON.toJSONString(result));
     }
 }
 

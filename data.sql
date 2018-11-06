@@ -83,3 +83,13 @@ CREATE TABLE `resource_authority` (
   FOREIGN KEY (authority_id) REFERENCES authority (id),
   FOREIGN KEY (resource_id) REFERENCES resource (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='资源角色关联表';
+
+DROP TABLE IF EXISTS `hello`;
+CREATE TABLE `hello` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(255) NOT NULL DEFAULT '' COMMENT '名称',
+  `name1` VARCHAR(255) DEFAULT NULL COMMENT '名称2',
+  `created_at` TIMESTAMP DEFAULT current_timestamp,
+  `updated_at` TIMESTAMP DEFAULT current_timestamp ON UPDATE current_timestamp,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='测试表';
