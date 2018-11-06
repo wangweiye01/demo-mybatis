@@ -3,6 +3,7 @@ package com.example.demo.security;
 import java.util.Collection;
 import java.util.Date;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,7 +15,10 @@ public class JwtUser implements UserDetails {
     private final String username;
     private final String firstname;
     private final String lastname;
+
+    @JSONField(serialize = false)
     private final String password;
+    
     private final String email;
     private final Collection<? extends GrantedAuthority> authorities;
     private final boolean enabled;
@@ -41,7 +45,6 @@ public class JwtUser implements UserDetails {
         this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
-    @JsonIgnore
     public Long getId() {
         return id;
     }
@@ -51,19 +54,16 @@ public class JwtUser implements UserDetails {
         return username;
     }
 
-    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
-    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
@@ -81,7 +81,6 @@ public class JwtUser implements UserDetails {
         return email;
     }
 
-    @JsonIgnore
     @Override
     public String getPassword() {
         return password;
@@ -97,7 +96,6 @@ public class JwtUser implements UserDetails {
         return enabled;
     }
 
-    @JsonIgnore
     public Date getLastPasswordResetDate() {
         return lastPasswordResetDate;
     }

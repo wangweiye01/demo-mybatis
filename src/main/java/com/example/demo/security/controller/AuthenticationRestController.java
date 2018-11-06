@@ -10,6 +10,9 @@ import com.example.demo.security.JwtUser;
 import com.example.demo.security.repository.AuthorityRepository;
 import com.example.demo.security.repository.UserRepository;
 import com.example.demo.security.service.JwtAuthenticationResponse;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +25,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class AuthenticationRestController {
@@ -52,24 +54,32 @@ public class AuthenticationRestController {
     @Autowired
     private AuthorityRepository authorityRepository;
 
+
+    @ApiOperation(value = "登录", notes = "")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户名", dataType = "int", required = true, paramType = "form"),
+            @ApiImplicitParam(name = "password", value = "密码", dataType = "int", required = true, paramType = "form"),
+    })
     @RequestMapping(value = "/auth", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
+    public JSONObject createAuthenticationToken(@RequestParam String username, @RequestParam String password, Device device) throws AuthenticationException {
 
         // Perform the security
         final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        authenticationRequest.getUsername(),
-                        authenticationRequest.getPassword()
-                )
+                new UsernamePasswordAuthenticationToken(username, password)
         );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Reload password post-security so we can generate token
-        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(username);
         final String token = jwtTokenUtil.generateToken(userDetails, device);
 
+        Map<String, Object> result = new HashMap<>();
+        result.put("token", token);
+        result.put("user", userDetails);
+
         // Return the token
-        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+        return JsonResult.success(result);
     }
 
     @RequestMapping(value = "/refresh", method = RequestMethod.GET)
