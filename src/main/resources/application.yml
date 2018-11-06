@@ -58,7 +58,7 @@ logging:
         demo: debug
 jwt:
   header: Authorization
-  secret: mySecret
+  secret: ENC(uFJxrNw4x+3AAhycCvyeBuZ/fl6RnQ7M)
   expiration: 604800
   route:
     authentication:
