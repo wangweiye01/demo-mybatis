@@ -18,16 +18,12 @@ public class CORSFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
-        String origin = req.getHeader("Origin");
 
-        if (origin == null) {
-            resp.addHeader("Access-Control-Allow-Origin", "*");
-        } else {
-            resp.addHeader("Access-Control-Allow-Origin", origin);
-        }
+        resp.addHeader("Access-Control-Allow-Origin", "*");
         resp.addHeader("Access-Control-Allow-Headers", "Origin, x-requested-with, Content-Type, Accept,X-Cookie, Authorization");
         resp.addHeader("Access-Control-Allow-Credentials", "true");
         resp.addHeader("Access-Control-Allow-Methods", "GET,POST,PUT,OPTIONS,DELETE");
+
         if (req.getMethod().equals("OPTIONS")) {
             resp.setStatus(HttpServletResponse.SC_OK);
             return;
