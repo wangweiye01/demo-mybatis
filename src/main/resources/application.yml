@@ -60,10 +60,6 @@ jwt:
   header: Authorization
   secret: ENC(uFJxrNw4x+3AAhycCvyeBuZ/fl6RnQ7M)
   expiration: 604800
-  route:
-    authentication:
-      path: auth
-      refresh: refresh
 page:
   begin: 1
   size: 10
