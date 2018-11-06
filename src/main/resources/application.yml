@@ -69,7 +69,7 @@ page:
   size: 10
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*Mapper.xml
-  #type-aliases-package: com.example.demo.*.entity
+  type-aliases-package: com.example.demo.*.entity
   global-config:
     id-type: 0
     field-strategy: 1
