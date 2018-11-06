@@ -2,7 +2,6 @@ package com.example.demo;
 
 import com.example.demo.common.TimeProvider;
 import com.example.demo.security.model.Authority;
-import com.example.demo.security.model.AuthorityName;
 import com.example.demo.security.model.User;
 import com.example.demo.security.JwtAuthenticationRequest;
 import com.example.demo.security.JwtTokenUtil;
@@ -91,7 +90,7 @@ public class DemoApplicationTests {
 
         Authority authority = new Authority();
         authority.setId(0L);
-        authority.setName(AuthorityName.ROLE_USER);
+        authority.setName("ROLE_USER");
         List<Authority> authorities = Arrays.asList(authority);
 
         User user = new User();
@@ -118,7 +117,7 @@ public class DemoApplicationTests {
 
         Authority authority = new Authority();
         authority.setId(1L);
-        authority.setName(AuthorityName.ROLE_ADMIN);
+        authority.setName("ROLE_ADMIN");
         List<Authority> authorities = Arrays.asList(authority);
 
         User user = new User();

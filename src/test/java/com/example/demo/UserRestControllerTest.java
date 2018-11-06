@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import com.example.demo.security.model.AuthorityName;
 import com.example.demo.security.model.User;
 import com.example.demo.security.JwtTokenUtil;
 import com.example.demo.security.JwtUser;
@@ -66,7 +65,7 @@ public class UserRestControllerTest {
 
         Authority authority = new Authority();
         authority.setId(1L);
-        authority.setName(AuthorityName.ROLE_ADMIN);
+        authority.setName("ROLE_ADMIN");
         List<Authority> authorities = Arrays.asList(authority);
 
         User user = new User();
