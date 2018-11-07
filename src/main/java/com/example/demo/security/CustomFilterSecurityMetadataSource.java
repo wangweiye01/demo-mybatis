@@ -13,6 +13,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -64,7 +65,24 @@ public class CustomFilterSecurityMetadataSource implements FilterInvocationSecur
         Api api = apiRepository.findByUriAndMethod(url, method);
 
         if (api == null) {
-            return new ArrayList<>();
+            String prefix = url.substring(0, url.lastIndexOf("/"));
+
+            String pattern = "^" + prefix + "/" + "\\d+";
+
+            boolean isMatch = Pattern.matches(pattern, url);
+
+            if (isMatch) {
+                url = url.replace(url.substring(url.lastIndexOf("/")), "/{id}");
+
+                api = apiRepository.findByUriAndMethod(url, method);
+
+                if (api == null) {
+                    return new ArrayList<>();
+                }
+
+            } else {
+                return new ArrayList<>();
+            }
         }
 
         List<Resource> resources = api.getResources();
@@ -92,7 +110,7 @@ public class CustomFilterSecurityMetadataSource implements FilterInvocationSecur
      * @return 定义允许请求的列表
      */
     private List<String> allowedRequest() {
-        return Arrays.asList("/auth/**", "/css/**", "/fonts/**", "/js/**", "/scss/**", "/img/**", "/html/**", "/", "/favicon.ico", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs");
+        return Arrays.asList("/auth/**", "/css/**", "/fonts/**", "/js/**", "/scss/**", "/img/**", "/html/**", "/", "/favicon.ico", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs", "/druid/**");
     }
 
     /**

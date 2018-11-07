@@ -1,12 +1,16 @@
 package com.example.demo.security.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "AUTHORITY")
+@Data
 public class Authority {
 
     @Id
@@ -24,27 +28,8 @@ public class Authority {
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     private List<Resource> resources;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
-    }
-
-    public String getName() {
+    @Override
+    public String toString() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

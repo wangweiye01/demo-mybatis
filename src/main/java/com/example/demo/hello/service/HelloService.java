@@ -23,6 +23,6 @@ public class HelloService {
     }
 
     public Hello findOne(Long id) {
-        return helloMapper.findOne(id);
+        return helloMapper.selectById(id);
     }
 }

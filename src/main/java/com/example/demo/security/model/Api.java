@@ -1,11 +1,14 @@
 package com.example.demo.security.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Table(name = "api")
+@Data
 public class Api {
     @Id
     @Column(name = "ID")
@@ -23,35 +26,8 @@ public class Api {
     @ManyToMany(mappedBy = "apis", fetch = FetchType.EAGER)
     private List<Resource> resources;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public List<Resource> getResources() {
-        return resources;
-    }
-
-    public void setResources(List<Resource> resources) {
-        this.resources = resources;
+    @Override
+    public String toString() {
+        return "uri";
     }
 }

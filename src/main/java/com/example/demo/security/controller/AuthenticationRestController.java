@@ -3,6 +3,7 @@ package com.example.demo.security.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.common.JsonResult;
 import com.example.demo.security.model.Authority;
+import com.example.demo.security.model.Resource;
 import com.example.demo.security.model.User;
 import com.example.demo.security.JwtAuthenticationRequest;
 import com.example.demo.security.JwtTokenUtil;
@@ -28,10 +29,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class AuthenticationRestController {
@@ -77,6 +75,22 @@ public class AuthenticationRestController {
         Map<String, Object> result = new HashMap<>();
         result.put("token", token);
         result.put("user", userDetails);
+
+        JwtUser jwtUser = (JwtUser) userDetails;
+
+        User user = userRepository.findByUsername(jwtUser.getUsername());
+
+        List<Authority> authorityList = user.getAuthorities();
+
+        Set<Resource> r = new HashSet<>();
+
+        authorityList.forEach(authority -> {
+            List<Resource> resources = authority.getResources();
+
+            r.addAll(resources);
+        });
+
+        result.put("resources", r);
 
         // Return the token
         return JsonResult.success(result);

@@ -8,6 +8,4 @@ import java.util.List;
 
 public interface HelloMapper extends BaseMapper<Hello> {
     List<Hello> findPage(Pagination pagination);
-
-    Hello findOne(Long id);
 }

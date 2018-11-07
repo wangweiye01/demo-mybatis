@@ -1,6 +1,10 @@
 package com.example.demo.security.model;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -8,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "RESOURCE")
+@Data
 public class Resource {
     @Id
     @Column(name = "ID")
@@ -35,6 +40,7 @@ public class Resource {
             name = "RESOURCE_API",
             joinColumns = {@JoinColumn(name = "RESOURCE_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "API_ID", referencedColumnName = "ID")})
+    @JSONField(serialize = false)
     private List<Api> apis;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -42,61 +48,11 @@ public class Resource {
             name = "RESOURCE_AUTHORITY",
             joinColumns = {@JoinColumn(name = "RESOURCE_ID", referencedColumnName = "ID")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")})
+    @JSONField(serialize = false)
     private Set<Authority> authorities;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getName() {
+    @Override
+    public String toString() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public Long getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
-    }
-
-    public List<Api> getApis() {
-        return apis;
-    }
-
-    public void setApis(List<Api> apis) {
-        this.apis = apis;
-    }
-
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
     }
 }
