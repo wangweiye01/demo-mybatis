@@ -4,6 +4,7 @@ import com.example.demo.security.model.Api;
 import com.example.demo.security.model.Authority;
 import com.example.demo.security.model.Resource;
 import com.example.demo.security.repository.ApiRepository;
+import com.github.pagehelper.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -11,6 +12,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -56,39 +58,26 @@ public class CustomFilterSecurityMetadataSource implements FilterInvocationSecur
      * @return 所需角色集合
      */
     private List<ConfigAttribute> getMatcherConfigAttribute(String url, String method) {
-        /*return roleResourceRepository.findByResource_ResUrl(url).stream()
-                .map(roles -> new SecurityConfig(roles.getRole().getRoleCode()))
-                .collect(Collectors.toList());*/
-
         Set<Authority> authorities = new HashSet<>();
+        // 1.根据url的开头去数据库模糊查询相应的api
 
-        Api api = apiRepository.findByUriAndMethod(url, method);
+        String prefix = url.substring(0, url.lastIndexOf("/"));
 
-        if (api == null) {
-            String prefix = url.substring(0, url.lastIndexOf("/"));
+        prefix = StringUtil.isEmpty(prefix) ? url : prefix + "%";
 
-            String pattern = "^" + prefix + "/" + "\\d+";
+        List<Api> apis = apiRepository.findByUriLikeAndMethod(prefix, method);
 
-            boolean isMatch = Pattern.matches(pattern, url);
+        // 2.查找完全匹配的api，如果没有，比对pathMatcher是否有匹配的结果
+        apis.forEach(api -> {
+            String pattern = api.getUri();
 
-            if (isMatch) {
-                url = url.replace(url.substring(url.lastIndexOf("/")), "/{id}");
+            if (new AntPathMatcher().match(pattern, url)) {
+                List<Resource> resources = api.getResources();
 
-                api = apiRepository.findByUriAndMethod(url, method);
-
-                if (api == null) {
-                    return new ArrayList<>();
-                }
-
-            } else {
-                return new ArrayList<>();
+                resources.forEach(resource -> {
+                    authorities.addAll(resource.getAuthorities());
+                });
             }
-        }
-
-        List<Resource> resources = api.getResources();
-
-        resources.forEach(x -> {
-            authorities.addAll(x.getAuthorities());
         });
 
         return authorities.stream().map(authority -> new SecurityConfig(authority.getName().toString())).collect(Collectors.toList());
